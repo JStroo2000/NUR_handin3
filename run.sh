@@ -15,8 +15,14 @@ wget https://home.strw.leidenuniv.nl/~daalen/Handin_files/satgals_m13.txt
 wget https://home.strw.leidenuniv.nl/~daalen/Handin_files/satgals_m14.txt
 wget https://home.strw.leidenuniv.nl/~daalen/Handin_files/satgals_m15.txt
 
-echo "Run the script"
-python3 NUR_handin3.py > NUR_handin3.py
+echo "Run the first script"
+python3 NUR_handin3a.py > NUR_handin3a.txt
+
+echo "Run the second script"
+python3 NUR_handin3b.py > NUR_handin3b.txt
+
+echo "Run the third script"
+python3 NUR_handin3c.py > NUR_handin3c.txt
 
 echo "Generate the pdf"
 pdflatex main.tex
