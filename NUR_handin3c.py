@@ -139,19 +139,26 @@ def N(x,A,Nsat,a,b,c):
     #The function is defined in such a way as to avoid division by 0
     return 4*np.pi*A*Nsat*((x**(a-1))/(b**(a-3)))*np.exp(-(x/b)**c)
 
+def factorial(n):
+    #A quick factorial function to use in the log likelyhood function
+    arr = np.ones(len(n))
+    for i in range(len(arr)):
+        arr[i] = np.product(np.arange(1,n[i]+1))
+    return arr
+
 def lnL(params, y, func, binedges):
     #Similar to chisquared above, but for the poissonian log likelyhood
     mean = np.zeros(len(y))
    
     if len(params.shape) > 1:
-        chi2 = np.zeros(params.shape[0])
+        loglike = np.zeros(params.shape[0])
         for i in range((params.shape[0])):
             params[i,0] = 1
             params[i,0] = params[i,1]/romberg(0,5,10,func, params[i,:])
             for j in range(len(mean)):
                 mean[j] = romberg(binedges[j],binedges[j+1],10,func,params[i,:])
-            chi2[i] =-1 * np.sum(y*np.log(mean)-mean-np.log(factorial(y)))
-        return chi2, params[0]
+            loglike[i] =-1 * np.sum(y*np.log(mean)-mean-np.log(factorial(y)))
+        return loglike, params[0]
     else:
         params[0] = 1
         params[0] = params[1]/romberg(0,5,10,func, params)
@@ -159,7 +166,7 @@ def lnL(params, y, func, binedges):
             mean[j] = romberg(binedges[j],binedges[j+1],10,func,params)
         return -1 * np.sum(y*np.log(mean)-mean-np.log(factorial(y))),params
 
-def minpoisson(filename,init,binnum):
+def minpoisson(filename,init,binnum,name):
     params = copy.copy(init)
     radius, nhalo = readfile(filename)
     N_sat = len(radius)/nhalo
@@ -176,10 +183,11 @@ def minpoisson(filename,init,binnum):
     plt.stairs(counts,bins,fill=True)
     plt.xscale('log')
     plt.yscale('log')
-    plt.title('{} with Poisson fit'.format(filename))
+    plt.title('{} with Poisson fit'.format(name))
     plt.xlabel('Radial measure x')
     plt.ylabel('Number of satellites')
-    plt.show()
+    plt.savefig('./plots/poisson{}.pdf'.format(name))
+    plt.close()
     midbins = bins[:-1]+0.5*np.diff(bins)
     G = Gtest(counts, N(midbins,*bestparams))
     print('The G-test value for the Poisson fit of {} is: {}'.format(filename,G))
@@ -202,8 +210,9 @@ def Qval(k,x):
     P = incgamma/gamma
     return 1-P
 
-minpoisson('satgals_m11.txt', parameters)
-minpoisson('satgals_m12.txt', parameters)
-minpoisson('satgals_m13.txt', parameters)
-minpoisson('satgals_m14.txt', parameters)
-minpoisson('satgals_m15.txt', parameters)
+parameters = [256/(5*(np.pi)**(3/2)),100,2.4,0.25,1.6]
+minpoisson('satgals_m11.txt', parameters,50,'m11')
+minpoisson('satgals_m12.txt', parameters,50,'m12')
+minpoisson('satgals_m13.txt', parameters,50,'m13')
+minpoisson('satgals_m14.txt', parameters,50,'m14')
+minpoisson('satgals_m15.txt', parameters,50,'m15')

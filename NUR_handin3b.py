@@ -162,7 +162,7 @@ def chisquared(params, x, y, func, binedges):
             var[j] = romberg(binedges[j],binedges[j+1],10,func,params)
         return np.sum(((y-func(x,*params))**2)/var**2), params
 
-def minchisquared(filename, init, binnum):
+def minchisquared(filename, init, binnum, name):
     #Fits and plots a chisquared fit of the halo satallite data
     params = copy.copy(init)
     radius, nhalo = readfile(filename)
@@ -185,10 +185,11 @@ def minchisquared(filename, init, binnum):
     plt.stairs(counts,bins,fill=True)
     plt.xscale('log')
     plt.yscale('log')
-    plt.title('{} with Chi squared fit'.format(filename))
+    plt.title('{} with Chi squared fit'.format(name))
     plt.xlabel('Radial measure x')
     plt.ylabel('Number of satellites')
-    plt.show()
+    plt.savefig('./plots/chi{}.pdf'.format(name))
+    plt.close()
     G = Gtest(counts, N(midbins,*bestparams))
     print('The G-test value for the chi squared fit of {} is: {}'.format(filename,G))
     Q = Qval(binnum-1,G)
@@ -210,8 +211,9 @@ def Qval(k,x):
     P = incgamma/gamma
     return 1-P
 
-minchisquared('satgals_m11.txt', parameters)
-minchisquared('satgals_m12.txt', parameters)
-minchisquared('satgals_m13.txt', parameters)
-minchisquared('satgals_m14.txt', parameters)
-minchisquared('satgals_m15.txt', parameters)
+parameters = [256/(5*(np.pi)**(3/2)),100,2.4,0.25,1.6]
+minchisquared('satgals_m11.txt', parameters,50,'m11')
+minchisquared('satgals_m12.txt', parameters,50,'m12')
+minchisquared('satgals_m13.txt', parameters,50,'m13')
+minchisquared('satgals_m14.txt', parameters,50,'m14')
+minchisquared('satgals_m15.txt', parameters,50,'m15')
