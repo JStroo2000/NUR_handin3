@@ -4,3 +4,7 @@ The printed outputs to the previous two scripts are
 \lstinputlisting{NUR_handin3b.txt}
 and
 \lstinputlisting{NUR_handin3c.txt}
+
+The degree of freedom for each fit is the number of bins - 1; more accurately, the count of each bin are the free paramters, meaning there are a number of free parameters equal to the number of bins. There is 1 constraint: the total number of counts must be equal to the number of satellites in the data file.
+
+The quantitative results of the fits, in combination with the G-test and Q-values, confirm the fits are not good: some of the Q-values are nan, and the others are exactly equal to 1.0. Normally, a Q-value larger than 0.1 indicates the fit should not be rejected, but in this case I expect a numerical error to be the cause. As such, the fits should be rejected, as expected.
