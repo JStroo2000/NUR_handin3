@@ -100,8 +100,8 @@ def simplex(N, target, start, func, maxnr, chiparams):
         #Determine if the simplex has found a minimum
         fracrange = np.abs(values[N]-values[0])/(0.5*np.abs(values[N]+values[0]))
         if fracrange < target:
-            print('Target met')
-            print(values)
+            #print('Target met')
+            print('The best value for the log-likelihood is {}'.format(values[0]))
             return np.append(params[:2],points[0])
         #Try mirroring the simplex using the centroid
         xtry = 2*centroid - points[N]
@@ -132,7 +132,7 @@ def simplex(N, target, start, func, maxnr, chiparams):
                     points[i] = 0.5*(points[0]+points[i])
         counter+=1
         
-    print('Maximum number of iterations reached')
+    #print('Maximum number of iterations reached')
     return np.append(params[:2],points[0])
 
 def N(x,A,Nsat,a,b,c):
@@ -177,7 +177,7 @@ def minpoisson(filename,init,binnum,name):
     counts = counts * 1/nhalo
     lnLparams = [counts,N,bins]
     bestparams = simplex(3,10**-15,params,lnL ,100,lnLparams)
-    print(bestparams)
+    print('The best parameters found in the poisson fit are a = {}, b={}, c={}'.format(bestparams[2],bestparams[3],bestparams[4]))
     xx = np.linspace(0,5,1000)
     plt.plot(xx,N(xx,*bestparams))
     plt.stairs(counts,bins,fill=True)
