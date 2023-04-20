@@ -39,7 +39,7 @@ def goldenSection(func, a, b, c, target,params = None, w=0.38197, minimum=True):
 parameters = [256/(np.pi**(3/2)),100,2.4,0.25,1.6]
 xmax = (goldenSection(N, 0,2.5,5,0.1,params=parameters,minimum=False))
 xx = np.linspace(0,5,1000)
-print('The maximum of N(x) is at x={}, and N(x)={}.'.format(xmax,N(xmax,*parameters))
+print('The maximum of N(x) is at x={}, and N(x)={}.'.format(xmax,N(xmax,*parameters)))
 plt.plot(xx, N(xx,*parameters))
 plt.plot(xmax,N(xmax,*parameters),'ob')
 plt.title('Maximizing N(x)')
