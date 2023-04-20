@@ -1,0 +1,45 @@
+\subsection*{b)}
+In this section the results for subquestion b will be presented. The script used for this question is 
+\lstinputlisting{NUR_handin3b.py}
+Note that this script also find the answers for question d. Those answers will be discussed in their own subsection.
+The results are as follows:
+\begin{figure}[!h]
+    \centering
+    \includegraphics{./plots/chim11.pdf}
+    \caption{Chi squared fit of the data in the m11 mass bin.}
+    \label{fig:chim11}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{./plots/chim12.pdf}
+    \caption{Chi squared fit of the data in the m12 mass bin.}
+    \label{fig:chim12}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{./plots/chim13.pdf}
+    \caption{Chi squared fit of the data in the m13 mass bin.}
+    \label{fig:chim13}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{./plots/chim14.pdf}
+    \caption{Chi squared fit of the data in the m14 mass bin.}
+    \label{fig:chim14}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{./plots/chim15.pdf}
+    \caption{Chi squared fit of the data in the m15 mass bin.}
+    \label{fig:chim15}
+\end{figure}
+
+I binned the data in 50 logarithmic bins on the range of $x \in [ 10^{-4},5]$. I used logarithmic bins because the data has relevant values over multiple orders of magnitude, and I chose the range to be the same as in excercise 2, with a lower bound avoiding the possibility of division by 0, and a higher bound that conforms to the higher bound that has been used in previous questions, for the sake of consistency. After some trial and error, I found 50 bins struck a good balance between efficiency and accuracy on the data.
+
+The values for $\langle N_{sat} \rangle$ will be presented in section d, together with the rest of the printed outputs of this script.
+
+I used the downhill simplex method to minimize the $\Chi^2$, because I needed a multidimensional minimization function, and Golden Ratio only works in one direction. The choice of algorithm likely also explains the mismatch in the fits: in every case, the fit overestimates the data by multiple orders of magnitude. Downhill simplex relies heavily on finding a good initial guess for the parameters, at the risk of getting stuck in local minima or not converging at all. I suspect the former happened here: I tried setting very tight target accuracies, with no real improvement. Given more time, I could perhaps have found initial parameter values that gave better fits. 

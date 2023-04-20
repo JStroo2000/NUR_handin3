@@ -1,0 +1,11 @@
+\section{Satellite galaxies around a massive central - part 2}
+\subsection*{a)}
+In this section I will present the answers to subquestion a of this handin excercise. The script used for this question is as follows:
+\lstinputlisting{NUR_handin3a.py}
+The results of this script are as follows:
+\lstinputlisting{NUR_handin3a.txt}
+I used the Golden Section minimization algorithm, because its implementation is relatively simple and because the range of the only maximum's location was already known to be between 0 and 5. To use Golden Section, it is necessary to have an initial bracket. Since Golden Section is a minimization algorithm, I simply multiplied the function 
+\begin{equation}
+    N(x) = 4\pi A \langle N_{sat} \rangle x^2 \left(\frac{x}{b}\right)^{a-3}exp[\left(\frac{x}{b}\right)^c]
+\end{equation}
+by -1.
